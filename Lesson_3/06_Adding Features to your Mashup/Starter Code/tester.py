@@ -1,4 +1,3 @@
-
 import httplib2
 import sys
 import json
@@ -29,26 +28,28 @@ try:
 		raise Exception('Received an unsuccessful status code of %s' % resp['status'])
 	print json.loads(result)
 
-	url = address + '/restaurants?location=Prague+Czech+Republic&mealType=Crepes'
-	h = httplib2.Http()
-	resp, result = h.request(url,'POST')
-	if resp['status'] != '200':
-		raise Exception('Received an unsuccessful status code of %s' % resp['status'])
-	print json.loads(result).iteritems()
+    # Because of the Google API daily Quota for each API key, cannot make these many calls, so commented out!
 
-	url = address + '/restaurants?location=Shanghai+China&mealType=Sandwiches'
-	h = httplib2.Http()
-	resp, result = h.request(url,'POST')
-	if resp['status'] != '200':
-		raise Exception('Received an unsuccessful status code of %s' % resp['status'])
-	print json.loads(result)
+	# url = address + '/restaurants?location=Prague+Czech+Republic&mealType=Crepes'
+	# h = httplib2.Http()
+	# resp, result = h.request(url,'POST')
+	# if resp['status'] != '200':
+	# 	raise Exception('Received an unsuccessful status code of %s' % resp['status'])
+	# print json.loads(result).iteritems()
 
-	url = address + '/restaurants?location=Nairobi+Kenya&mealType=Pizza'
-	h = httplib2.Http()
-	resp, result = h.request(url,'POST')
-	if resp['status'] != '200':
-		raise Exception('Received an unsuccessful status code of %s' % resp['status'])
-	print json.loads(result)
+	# url = address + '/restaurants?location=Shanghai+China&mealType=Sandwiches'
+	# h = httplib2.Http()
+	# resp, result = h.request(url,'POST')
+	# if resp['status'] != '200':
+	# 	raise Exception('Received an unsuccessful status code of %s' % resp['status'])
+	# print json.loads(result)
+
+	# url = address + '/restaurants?location=Nairobi+Kenya&mealType=Pizza'
+	# h = httplib2.Http()
+	# resp, result = h.request(url,'POST')
+	# if resp['status'] != '200':
+	# 	raise Exception('Received an unsuccessful status code of %s' % resp['status'])
+	# print json.loads(result)
 
 except Exception as err:
 	print "Test 1 FAILED: Could not add new restaurants"

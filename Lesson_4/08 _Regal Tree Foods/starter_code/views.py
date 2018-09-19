@@ -4,7 +4,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy import create_engine
 
-from flask.ext.httpauth import HTTPBasicAuth
+from flask_httpauth import HTTPBasicAuth
 auth = HTTPBasicAuth()
 
 
@@ -17,12 +17,28 @@ app = Flask(__name__)
 
 
 
-
 #ADD @auth.verify_password decorator here
+@auth.verify_password
+def verify_password(token_or_username, password):
+    user_id = User.verify_auth_token(token_or_username)
+    if user_id:
+        user = session.query(User).filter_by(id = user_id).one()
+    else:
+        user = session.query(User).filter_by(username = token_or_username).first()
+        if not user or not user.verify_password(password):
+            return False
+    g.user = user
+    return True
+
+
 
 
 #add /token route here to get a token for a user with login credentials
-
+@app.route('/token')
+@auth.login_required
+def get_auth_token():
+    token = g.user.generate_auth_token()
+    return jsonify({'token': token.decode('ascii')})
 
 
 

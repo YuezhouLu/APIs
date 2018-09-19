@@ -6,8 +6,6 @@ from sqlalchemy import create_engine
 
 
 
-
-
 Base = declarative_base()
 class Restaurant(Base):
   __tablename__ = 'restaurant'

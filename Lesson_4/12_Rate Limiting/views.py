@@ -9,9 +9,6 @@ from flask import Flask, jsonify
 app = Flask(__name__)
 
 
-
-
-
 class RateLimit(object):
     expiration_window = 10
 
@@ -50,10 +47,6 @@ def ratelimit(limit, per=300, send_x_headers=True,
         return update_wrapper(rate_limited, f)
     return decorator
 
-
-
-
-
 @app.after_request
 def inject_x_rate_headers(response):
     limit = get_view_rate_limit()
@@ -61,8 +54,9 @@ def inject_x_rate_headers(response):
         h = response.headers
         h.add('X-RateLimit-Remaining', str(limit.remaining))
         h.add('X-RateLimit-Limit', str(limit.limit))
-        h.add('X-RateLimit-Reset', str(limit.reset))
+        h.add('X-RateLimit-Reset', str(limit.reset)) # the actual unix timestamp (since 1970/01/01) when the quota will recover (plus per everytime)
     return response
+    # use $ curl -I http://localhost:5000/rate-limited, if want to check the effect of these header modifications!
 
 @app.route('/rate-limited')
 @ratelimit(limit=300, per=30 * 1)
@@ -70,6 +64,6 @@ def index():
     return jsonify({'response':'This is a rate limited response'})
 
 if __name__ == '__main__':
-	app.secret_key = 'super_secret_key'
-	app.debug = True
-	app.run(host = '0.0.0.0', port = 5000)
+    app.secret_key = 'super_secret_key'
+    app.debug = True
+    app.run(host = '0.0.0.0', port = 5000)

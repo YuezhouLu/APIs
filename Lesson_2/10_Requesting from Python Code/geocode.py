@@ -9,6 +9,10 @@ def getGeocodeLocation(inputString):
     url = ('https://maps.googleapis.com/maps/api/geocode/json?address=%s&key=%s'% (locationString, google_api_key))
     h = httplib2.Http()
     result = json.loads(h.request(url,'GET')[1])
+    # for debugging, print the result to check the API key.
+    # print result
     latitude = result['results'][0]['geometry']['location']['lat']
     longitude = result['results'][0]['geometry']['location']['lng']
     return (latitude,longitude)
+
+print getGeocodeLocation("Tokyo")

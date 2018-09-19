@@ -21,7 +21,7 @@ def SendRequests(url, req_per_minute):
 	while requests < req_per_minute:
 		result = json.loads(h.request(url,'GET')[1])
 		#result = h.request(url,'GET')[1]
-		#print result
+		print result
 		if result.get('error') is not None:
 			print "Error #%s : %s" %(result.get('error'), result.get('data'))
 			print "Hit rate limit. Waiting 5 seconds and trying again..."

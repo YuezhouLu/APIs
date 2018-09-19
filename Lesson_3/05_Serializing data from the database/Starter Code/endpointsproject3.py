@@ -32,7 +32,6 @@ def puppiesFunction():
     print name
     print description
     return makeANewPuppy(name, description)
- 
   
  
 #Make another app.route() decorator here that takes in an integer id in the URI
@@ -46,25 +45,27 @@ def puppiesFunctionId(id):
   elif request.method == 'PUT':
     name = request.args.get('name', '')
     description = request.args.get('description', '')
-    return updatePuppy(id,name, description)
+    return updatePuppy(id, name, description)
     
  #Call the method to remove a puppy 
   elif request.method == 'DELETE':
     return deletePuppy(id)
 
+
+
 def getAllPuppies():
   puppies = session.query(Puppy).all()
-  return jsonify(Puppies=[i.serialize for i in puppies])
+  return jsonify(Puppies = [i.serialize for i in puppies])
 
 def getPuppy(id):
   puppy = session.query(Puppy).filter_by(id = id).one()
-  return jsonify(puppy=puppy.serialize) 
+  return jsonify(puppy = puppy.serialize) 
   
-def makeANewPuppy(name,description):
+def makeANewPuppy(name, description):
   puppy = Puppy(name = name, description = description)
   session.add(puppy)
   session.commit()
-  return jsonify(Puppy=puppy.serialize)
+  return jsonify(Puppy = puppy.serialize)
 
 def updatePuppy(id,name, description):
   puppy = session.query(Puppy).filter_by(id = id).one()
@@ -85,4 +86,4 @@ def deletePuppy(id):
 
 if __name__ == '__main__':
     app.debug = False
-    app.run(host='0.0.0.0', port=5000)	
+    app.run(host='0.0.0.0', port=5000)

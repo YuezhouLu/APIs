@@ -98,7 +98,7 @@ def login(provider):
         #STEP 3 - Find User or make a new one
         
         #Get user info
-        h = httplib2.Http()
+        # h = httplib2.Http()
         userinfo_url =  "https://www.googleapis.com/oauth2/v1/userinfo"
         params = {'access_token': credentials.access_token, 'alt':'json'}
         answer = requests.get(userinfo_url, params=params)
